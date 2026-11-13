@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}SecureBank{% endblock %} | SecureBank RBAC</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="{{ url_for('index') }}">SecureBank</a>
+  {% if current_user %}
+  <nav class="nav">
+    <a href="{{ url_for('dashboard') }}">Dashboard</a>
+    {% if current_user.has_permission('profile:view_own') %}
+      <a href="{{ url_for('profile') }}">My profile</a>
+    {% endif %}
+    {% if current_user.has_permission('customers:view') %}
+      <a href="{{ url_for('manager_customers') }}">Customers</a>
+      <a href="{{ url_for('manager_transactions') }}">Transactions</a>
+    {% endif %}
+    {% if current_user.has_permission('users:manage') %}
+      <a href="{{ url_for('admin_users') }}">Users</a>
+      <a href="{{ url_for('admin_audit') }}">Audit log</a>
+    {% endif %}
+    {% if current_user.has_permission('permissions:manage') %}
+      <a href="{{ url_for('admin_roles') }}">Roles &amp; permissions</a>
+    {% endif %}
+  </nav>
+  <div class="userbox">
+    <span class="badge badge-{{ current_user.role_name }}">{{ current_user.role.label }}</span>
+    <span class="username">{{ current_user.full_name }}</span>
+    <form method="post" action="{{ url_for('logout') }}" class="inline">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <button class="btn btn-ghost" type="submit">Log out</button>
+    </form>
+  </div>
+  {% endif %}
+</header>
+
+<main class="container">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+      <div class="flash flash-{{ category }}" role="status">{{ message }}</div>
+    {% endfor %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</main>
+
+<footer class="footer">
+  SecureBank RBAC demo &middot; Secure Coding Assignment 1 &middot; development use only
+</footer>
+</body>
+</html>

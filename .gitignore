@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Secrets and key material (never commit or zip)
+.env
+*.key
+*.pem
+secure_keys/
+certs/
+*.old
+
+# Local data
+instance/
+*.db
+*.sqlite3
+
+# Logs and temporary files
+*.log
+tmp/
+temp/
+.DS_Store
+Thumbs.db

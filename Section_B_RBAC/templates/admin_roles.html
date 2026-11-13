@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Roles & permissions{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div>
+    <h1>Roles &amp; permissions</h1>
+    <p class="muted">Choose which permissions each role holds. Changes take effect on the next request. Core administrator permissions are locked to prevent lockout.</p>
+  </div>
+</section>
+
+<div class="grid grid-3">
+{% for role in roles %}
+  <section class="card">
+    <h2><span class="badge badge-{{ role.name }}">{{ role.label }}</span></h2>
+    <form method="post" action="{{ url_for('admin_update_role_permissions', role_id=role.id) }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <ul class="checklist">
+        {% for p in catalogue %}
+        <li>
+          <label class="check">
+            <input type="checkbox" name="permissions" value="{{ p.name }}"
+              {% if role.has(p.name) %}checked{% endif %}
+              {% if role.name == 'admin' and p.name in protected %}disabled{% endif %}>
+            <span><code>{{ p.name }}</code><br><small class="muted">{{ p.description }}</small></span>
+          </label>
+          {% if role.name == 'admin' and p.name in protected %}
+          <input type="hidden" name="permissions" value="{{ p.name }}">
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+      <button class="btn btn-primary btn-block" type="submit">Save {{ role.label }} permissions</button>
+    </form>
+  </section>
+{% endfor %}
+</div>
+{% endblock %}

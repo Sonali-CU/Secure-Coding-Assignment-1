@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}New user{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div>
+    <h1>Create user</h1>
+    <p class="muted">Passwords must be at least 10 characters and contain a letter and a number. They are stored as salted scrypt hashes.</p>
+  </div>
+</section>
+
+<section class="card narrow">
+  <form method="post" action="{{ url_for('admin_user_new') }}" novalidate>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>Username <input name="username" value="{{ values.username or '' }}" maxlength="32" required></label>
+    <label>Full name <input name="full_name" value="{{ values.full_name or '' }}" maxlength="100" required></label>
+    <label>Email <input type="email" name="email" value="{{ values.email or '' }}" maxlength="120" required></label>
+    <label>Phone <input type="tel" name="phone" value="{{ values.phone or '' }}" maxlength="20"></label>
+    <label>Role
+      <select name="role" required>
+        {% for r in roles %}<option value="{{ r.name }}" {% if values.role == r.name %}selected{% endif %}>{{ r.label }}</option>{% endfor %}
+      </select>
+    </label>
+    <label>Temporary password <input type="password" name="password" maxlength="128" required autocomplete="new-password"></label>
+    <div class="actions">
+      <button class="btn btn-primary" type="submit">Create user</button>
+      <a class="btn btn-ghost" href="{{ url_for('admin_users') }}">Cancel</a>
+    </div>
+  </form>
+</section>
+{% endblock %}

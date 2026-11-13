@@ -1,0 +1,69 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.18, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/claude/Secure_Coding_Assignment_1/Section_D_Cryptography
+configfile: pytest.ini
+testpaths: tests
+plugins: platformdirs-4.13.5, anyio-4.15.1
+collecting ... collected 48 items
+
+tests/test_crypto.py::test_hash_is_argon2id_and_not_plaintext PASSED     [  2%]
+tests/test_crypto.py::test_correct_password_succeeds PASSED              [  4%]
+tests/test_crypto.py::test_incorrect_password_fails PASSED               [  6%]
+tests/test_crypto.py::test_empty_password_fails PASSED                   [  8%]
+tests/test_crypto.py::test_same_password_gets_different_salts PASSED     [ 10%]
+tests/test_crypto.py::test_malformed_hash_is_handled_safely PASSED       [ 12%]
+tests/test_crypto.py::test_hash_rejects_empty_and_non_string_input PASSED [ 14%]
+tests/test_crypto.py::test_current_parameters_do_not_need_rehash PASSED  [ 16%]
+tests/test_crypto.py::test_encrypt_decrypt_round_trip PASSED             [ 18%]
+tests/test_crypto.py::test_ciphertext_does_not_contain_plaintext PASSED  [ 20%]
+tests/test_crypto.py::test_fresh_nonce_for_every_encryption PASSED       [ 22%]
+tests/test_crypto.py::test_nonce_is_twelve_bytes PASSED                  [ 25%]
+tests/test_crypto.py::test_wrong_key_fails PASSED                        [ 27%]
+tests/test_crypto.py::test_modified_ciphertext_fails_authentication PASSED [ 29%]
+tests/test_crypto.py::test_modified_nonce_fails_authentication PASSED    [ 31%]
+tests/test_crypto.py::test_modified_tag_fails_authentication PASSED      [ 33%]
+tests/test_crypto.py::test_wrong_associated_data_fails PASSED            [ 35%]
+tests/test_crypto.py::test_truncated_blob_fails_safely PASSED            [ 37%]
+tests/test_crypto.py::test_invalid_key_length_is_rejected_without_leaking_key PASSED [ 39%]
+tests/test_crypto.py::test_non_bytes_key_is_rejected PASSED              [ 41%]
+tests/test_crypto.py::test_empty_plaintext_round_trip PASSED             [ 43%]
+tests/test_crypto.py::test_text_helpers_round_trip PASSED                [ 45%]
+tests/test_crypto.py::test_text_helper_rejects_invalid_base64 PASSED     [ 47%]
+tests/test_crypto.py::test_hmac_tag_is_64_hex_characters PASSED          [ 50%]
+tests/test_crypto.py::test_valid_hmac_verifies PASSED                    [ 52%]
+tests/test_crypto.py::test_modified_message_fails_hmac_verification PASSED [ 54%]
+tests/test_crypto.py::test_wrong_key_fails_hmac_verification PASSED      [ 56%]
+tests/test_crypto.py::test_modified_tag_fails_hmac_verification PASSED   [ 58%]
+tests/test_crypto.py::test_hmac_verify_handles_wrong_types_safely PASSED [ 60%]
+tests/test_crypto.py::test_hmac_uses_constant_time_comparison PASSED     [ 62%]
+tests/test_crypto.py::test_hmac_rejects_short_key PASSED                 [ 64%]
+tests/test_crypto.py::test_replay_guard_accepts_once_then_rejects_replay PASSED [ 66%]
+tests/test_crypto.py::test_replay_guard_rejects_stale_message PASSED     [ 68%]
+tests/test_crypto.py::test_replay_guard_rejects_tampered_payload PASSED  [ 70%]
+tests/test_crypto.py::test_replay_guard_rejects_malformed_message PASSED [ 72%]
+tests/test_crypto.py::test_key_is_created_with_32_bytes PASSED           [ 75%]
+tests/test_crypto.py::test_same_key_is_returned_on_later_calls PASSED    [ 77%]
+tests/test_crypto.py::test_key_file_is_owner_only PASSED                 [ 79%]
+tests/test_crypto.py::test_world_readable_key_file_is_refused PASSED     [ 81%]
+tests/test_crypto.py::test_key_from_environment_variable PASSED          [ 83%]
+tests/test_crypto.py::test_invalid_environment_key_is_rejected_safely PASSED [ 85%]
+tests/test_crypto.py::test_key_name_is_validated_against_path_traversal PASSED [ 87%]
+tests/test_crypto.py::test_rotation_archives_old_key_and_creates_new PASSED [ 89%]
+tests/test_crypto.py::test_describe_never_returns_key_material PASSED    [ 91%]
+tests/test_crypto.py::test_server_context_refuses_old_tls_versions PASSED [ 93%]
+tests/test_crypto.py::test_client_with_trusted_certificate_gets_200 PASSED [ 95%]
+tests/test_crypto.py::test_client_without_trusted_certificate_is_rejected PASSED [ 97%]
+tests/test_crypto.py::test_tls_1_1_is_refused PASSED                     [100%]
+
+=============================== warnings summary ===============================
+tests/test_crypto.py::test_tls_1_1_is_refused
+  /home/claude/Secure_Coding_Assignment_1/Section_D_Cryptography/tests/test_crypto.py:345: DeprecationWarning: ssl.TLSVersion.TLSv1_1 is deprecated
+    context.maximum_version = ssl.TLSVersion.TLSv1_1
+
+tests/test_crypto.py::test_tls_1_1_is_refused
+  /home/claude/Secure_Coding_Assignment_1/Section_D_Cryptography/tests/test_crypto.py:346: DeprecationWarning: ssl.TLSVersion.TLSv1_1 is deprecated
+    context.minimum_version = ssl.TLSVersion.TLSv1_1
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 48 passed, 2 warnings in 1.13s ========================

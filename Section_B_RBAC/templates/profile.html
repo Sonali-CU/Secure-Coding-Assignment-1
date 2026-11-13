@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}My profile{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div>
+    <h1>My profile</h1>
+    <p class="muted">Viewing your own record.</p>
+  </div>
+  <a class="btn btn-primary" href="{{ url_for('profile_edit') }}">Edit profile</a>
+</section>
+
+<section class="card">
+  <dl class="kv kv-wide">
+    <dt>Customer ID</dt><dd>{{ user.id }}</dd>
+    <dt>Username</dt><dd>{{ user.username }}</dd>
+    <dt>Full name</dt><dd>{{ user.full_name }}</dd>
+    <dt>Email</dt><dd>{{ user.email }}</dd>
+    <dt>Phone</dt><dd>{{ user.phone or '—' }}</dd>
+    <dt>Role</dt><dd><span class="badge badge-{{ user.role_name }}">{{ user.role.label }}</span></dd>
+    <dt>Member since</dt><dd>{{ user.created_at.strftime('%Y-%m-%d') }}</dd>
+  </dl>
+</section>
+{% endblock %}

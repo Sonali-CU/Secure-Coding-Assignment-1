@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Customer {{ customer.username }}{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div>
+    <h1>Customer record: {{ customer.full_name }}</h1>
+    <p class="muted">Viewed by {{ current_user.role.label }} {{ current_user.username }}</p>
+  </div>
+  <a class="btn btn-ghost" href="{{ url_for('manager_customers') if current_user.has_permission('customers:view') else url_for('profile') }}">Back</a>
+</section>
+
+<section class="card">
+  <dl class="kv kv-wide">
+    <dt>Customer ID</dt><dd>{{ customer.id }}</dd>
+    <dt>Username</dt><dd>{{ customer.username }}</dd>
+    <dt>Full name</dt><dd>{{ customer.full_name }}</dd>
+    <dt>Email</dt><dd>{{ customer.email }}</dd>
+    <dt>Phone</dt><dd>{{ customer.phone or '—' }}</dd>
+    <dt>Account status</dt><dd>{{ 'Active' if customer.is_active else 'Inactive' }}</dd>
+  </dl>
+</section>
+
+<section class="card">
+  <h2>Transactions</h2>
+  {% if transactions %}
+  <table class="table">
+    <thead><tr><th>#</th><th>Description</th><th class="num">Amount (USD)</th><th>Status</th></tr></thead>
+    <tbody>
+      {% for t in transactions %}
+      <tr><td>{{ t.id }}</td><td>{{ t.description }}</td><td class="num">{{ t.amount_display }}</td>
+          <td><span class="pill pill-{{ t.status }}">{{ t.status }}</span></td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p class="muted">No transactions for this customer.</p>
+  {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,14 @@
+Screenshot	Request	Server response	Note
+01_login_page.png	GET /login	HTTP 200	login page, no session
+11_unauthenticated_request_401.png	GET /customer/dashboard	HTTP 401	expected 401 without login
+02_customer_dashboard.png	GET /customer/dashboard	HTTP 200	expected 200
+03_customer_profile.png	GET /profile	HTTP 200	expected 200 (own profile)
+04_customer_other_customer_record_denied.png	GET /customers/2	HTTP 404	expected 404: customer 1 requests customer 2
+05_customer_admin_page_denied.png	GET /admin/dashboard	HTTP 403	expected 403
+06_manager_dashboard.png	GET /manager/dashboard	HTTP 200	expected 200
+12_manager_transactions.png	GET /manager/transactions	HTTP 200	expected 200
+13_manager_admin_page_denied.png	GET /admin/users	HTTP 403	expected 403: manager on admin page
+07_admin_dashboard.png	GET /admin/dashboard	HTTP 200	expected 200
+08_admin_user_and_role_management.png	GET /admin/users	HTTP 200	expected 200
+09_admin_roles_and_permissions.png	GET /admin/roles	HTTP 200	expected 200
+10_admin_audit_log.png	GET /admin/audit	HTTP 200	expected 200

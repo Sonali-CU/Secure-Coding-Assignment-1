@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Edit profile{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div>
+    <h1>Edit my profile</h1>
+    <p class="muted">You can change your name, email and phone number. Your role and username cannot be changed here.</p>
+  </div>
+</section>
+
+<section class="card narrow">
+  <form method="post" action="{{ url_for('profile_edit') }}" novalidate>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>Full name
+      <input name="full_name" value="{{ values.full_name }}" maxlength="100" required>
+    </label>
+    <label>Email
+      <input type="email" name="email" value="{{ values.email }}" maxlength="120" required>
+    </label>
+    <label>Phone
+      <input type="tel" name="phone" value="{{ values.phone }}" maxlength="20">
+    </label>
+    <div class="actions">
+      <button class="btn btn-primary" type="submit">Save changes</button>
+      <a class="btn btn-ghost" href="{{ url_for('profile') }}">Cancel</a>
+    </div>
+  </form>
+</section>
+{% endblock %}

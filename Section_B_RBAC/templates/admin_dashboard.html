@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Administrator dashboard{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div>
+    <h1>Administrator dashboard</h1>
+    <p class="muted">User management, role assignment and permission administration.</p>
+  </div>
+</section>
+
+<div class="grid grid-3">
+  <section class="card stat">
+    <div class="stat-value">{{ user_count }}</div>
+    <div class="stat-label">Users</div>
+    <a href="{{ url_for('admin_users') }}">Manage users &rarr;</a>
+  </section>
+  <section class="card stat">
+    <div class="stat-value">{{ active_count }}</div>
+    <div class="stat-label">Active accounts</div>
+    <a href="{{ url_for('admin_users') }}">Review status &rarr;</a>
+  </section>
+  <section class="card stat">
+    <div class="stat-value">{{ role_count }}</div>
+    <div class="stat-label">Roles</div>
+    <a href="{{ url_for('admin_roles') }}">Roles &amp; permissions &rarr;</a>
+  </section>
+</div>
+
+<section class="card">
+  <h2>Recent audit events</h2>
+  <table class="table compact">
+    <thead><tr><th>When (UTC)</th><th>Actor</th><th>Action</th><th>Target</th></tr></thead>
+    <tbody>
+      {% for log, username in recent %}
+      <tr><td>{{ log.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td><td>{{ username or 'anonymous' }}</td>
+          <td><code>{{ log.action }}</code></td><td>{{ log.target }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <a href="{{ url_for('admin_audit') }}">Full audit log &rarr;</a>
+</section>
+{% endblock %}

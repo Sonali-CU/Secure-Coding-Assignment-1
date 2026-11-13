@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Manager dashboard{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div>
+    <h1>Manager dashboard</h1>
+    <p class="muted">Customer records and transaction review. User, role and permission administration is not available to managers.</p>
+  </div>
+</section>
+
+<div class="grid grid-3">
+  <section class="card stat">
+    <div class="stat-value">{{ customer_count }}</div>
+    <div class="stat-label">Customers</div>
+    <a href="{{ url_for('manager_customers') }}">View customer records &rarr;</a>
+  </section>
+  <section class="card stat">
+    <div class="stat-value">{{ pending }}</div>
+    <div class="stat-label">Pending transactions</div>
+    <a href="{{ url_for('manager_transactions') }}">Review transactions &rarr;</a>
+  </section>
+  <section class="card stat">
+    <div class="stat-value">{{ approved }}</div>
+    <div class="stat-label">Approved transactions</div>
+    <a href="{{ url_for('manager_transactions') }}">View all &rarr;</a>
+  </section>
+</div>
+{% endblock %}

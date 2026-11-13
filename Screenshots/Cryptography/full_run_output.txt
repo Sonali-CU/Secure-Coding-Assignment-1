@@ -1,0 +1,71 @@
+SecureBank cryptography demonstration
+Libraries: argon2-cffi (Argon2id), cryptography (AES-GCM), Python hmac/hashlib, ssl (TLS)
+
+== [K7] Task 7 - Key generation, storage and management ==
+key 'aes_data': 256 bits, file permissions 0o600
+   stored in: /home/claude/Secure_Coding_Assignment_1/Section_D_Cryptography/secure_keys/aes_data.key
+key 'hmac_signing': 256 bits, file permissions 0o600
+   stored in: /home/claude/Secure_Coding_Assignment_1/Section_D_Cryptography/secure_keys/hmac_signing.key
+Key values are never printed. Keys are read from a file outside the source code or from an
+environment variable (AES_DATA_KEY_B64 / HMAC_SIGNING_KEY_B64) in production.
+
+== [S10] Task 1 - Argon2id password hash generation ==
+Algorithm: Argon2id (argon2-cffi), time_cost=3, memory_cost=64 MiB, parallelism=4
+Stored value (plaintext password is not stored):
+$argon2id$v=19$m=65536,t=3,p=4$arNGK5ZLF40DbGzIK7w6cw$m4X2nOwmZpg6HDrFnxV2uL8pI0jNsuFlLNnUGGClvnI
+Same password hashed again gives a different value (random salt): True
+
+== [S11] Task 2 - Password verification: CORRECT password ==
+verify_password(stored_hash, <correct password>) -> True
+
+== [S12] Task 2 - Password verification: INCORRECT password ==
+verify_password(stored_hash, 'correct#horse2026') -> False
+verify_password(stored_hash, 'Correct#Horse2025') -> False
+verify_password(stored_hash, (empty string)) -> False
+verify_password(stored_hash, <malformed hash>) -> False
+
+== [S13] Task 3 - AES-256-GCM encryption ==
+Algorithm: AES-256-GCM. Nonce: 12 bytes, freshly generated for this encryption.
+Nonce (hex):          e6aef50a10a4e77f373cc9d0
+Ciphertext+tag (b64): slPDGhDTk5W6Vtc9SinBjVderhY0G+6HDSKyw1FGn+XHmvI3xobfIt96kOPekbhT58elrTFpdw==
+Plaintext present in output? False
+Second encryption uses a different nonce: True
+
+== [S14] Task 4 - AES-256-GCM decryption ==
+Correct key and AAD -> recovered: Card 4111 1111 1111 1111, expires 12/29
+Wrong key: REJECTED - Authentication failed: wrong key, wrong associated data, or the data was modified.
+Wrong associated data (record swap): REJECTED - Authentication failed: wrong key, wrong associated data, or the data was modified.
+Invalid key length (16 bytes): REJECTED - AES-256 key must be exactly 32 bytes
+
+== [S15] Task 5 - HMAC-SHA256 generation ==
+Message:     transfer from=ACC-1001 to=ACC-2002 amount=500.00 currency=USD
+HMAC-SHA256: 19a3012a00e06f6f4e842110b2f5e4ed33a22b5aa7f843b509a323545480e9ce
+
+== [S16] Task 6 - HMAC verification (constant-time comparison) ==
+Unmodified message with correct key -> True
+Same message with a different key   -> False
+
+== [S17] Task 6 - Tampered message detection and replay protection ==
+Amount changed 500.00 -> 5000.00, original tag -> False (modified message detected)
+First submission of a signed message:   ACCEPTED
+Same message submitted again (replay):  REJECTED: replay (nonce already used)
+Validly signed message from one hour ago: REJECTED: timestamp outside allowed window (stale or replayed later)
+Payload edited after signing:           REJECTED: MAC does not match (message modified or wrong key)
+
+== [S18] Task 8 - HTTPS server running and client verification ==
+Certificate: /home/claude/Secure_Coding_Assignment_1/Section_D_Cryptography/certs/cert.pem
+Self-signed, RSA 3072-bit, SHA-256, valid 365 days, SAN = localhost, 127.0.0.1
+Private key: /home/claude/Secure_Coding_Assignment_1/Section_D_Cryptography/certs/key.pem (never committed; owner-only permissions on POSIX)
+HTTPS server listening on https://127.0.0.1:43453 (TLS 1.2+ only)
+Client with the certificate as trust anchor: GET / -> HTTP 200
+   body: {"message":"HTTPS connection established","transport":"TLS"}
+
+   TLS protocol: TLSv1.3   cipher: TLS_AES_256_GCM_SHA384
+   certificate verified: True   HSTS: max-age=31536000; includeSubDomains
+Client without the certificate in its trust store: REJECTED (self-signed certificate)
+HTTPS server stopped.
+
+ALL DEMONSTRATIONS COMPLETED
+
+[stderr]
+127.0.0.1 - - [11/Nov/2026 07:43:44] "GET / HTTP/1.1" 200 -

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}My dashboard{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div>
+    <h1>Welcome, {{ current_user.full_name }}</h1>
+    <p class="muted">Customer dashboard &middot; you can see and manage only your own information.</p>
+  </div>
+  <a class="btn btn-primary" href="{{ url_for('profile_edit') }}">Edit profile</a>
+</section>
+
+<div class="grid grid-2">
+  <section class="card">
+    <h2>Account summary</h2>
+    <dl class="kv">
+      <dt>Username</dt><dd>{{ current_user.username }}</dd>
+      <dt>Email</dt><dd>{{ current_user.email }}</dd>
+      <dt>Phone</dt><dd>{{ current_user.phone or '—' }}</dd>
+      <dt>Status</dt><dd><span class="pill pill-approved">Active</span></dd>
+    </dl>
+  </section>
+  <section class="card">
+    <h2>Quick actions</h2>
+    <ul class="plain">
+      <li><a href="{{ url_for('profile') }}">View my profile</a></li>
+      <li><a href="{{ url_for('profile_edit') }}">Update my contact details</a></li>
+    </ul>
+    <p class="muted small">Other customers' records and all administrative pages are not available to your role.</p>
+  </section>
+</div>
+
+<section class="card">
+  <h2>My transactions</h2>
+  {% if transactions %}
+  <table class="table">
+    <thead><tr><th>#</th><th>Date (UTC)</th><th>Description</th><th class="num">Amount (USD)</th><th>Status</th></tr></thead>
+    <tbody>
+      {% for t in transactions %}
+      <tr>
+        <td>{{ t.id }}</td>
+        <td>{{ t.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+        <td>{{ t.description }}</td>
+        <td class="num">{{ t.amount_display }}</td>
+        <td><span class="pill pill-{{ t.status }}">{{ t.status }}</span></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p class="muted">No transactions yet.</p>
+  {% endif %}
+</section>
+{% endblock %}

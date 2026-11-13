@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}User management{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div>
+    <h1>User &amp; role management</h1>
+    <p class="muted">Assign roles, activate or deactivate accounts. You cannot change your own role or deactivate yourself.</p>
+  </div>
+  {% if current_user.has_permission('roles:assign') %}
+  <a class="btn btn-primary" href="{{ url_for('admin_user_new') }}">+ New user</a>
+  {% endif %}
+</section>
+
+<section class="card">
+  <table class="table">
+    <thead><tr><th>ID</th><th>Username</th><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Actions</th></tr></thead>
+    <tbody>
+      {% for u in users %}
+      <tr>
+        <td>{{ u.id }}</td>
+        <td>{{ u.username }}</td>
+        <td>{{ u.full_name }}</td>
+        <td>{{ u.email }}</td>
+        <td>
+          <form method="post" action="{{ url_for('admin_change_role', user_id=u.id) }}" class="inline">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <select name="role" aria-label="Role for {{ u.username }}">
+              {% for r in roles %}<option value="{{ r.name }}" {% if r.name == u.role_name %}selected{% endif %}>{{ r.label }}</option>{% endfor %}
+            </select>
+            <button class="btn btn-small" type="submit">Save</button>
+          </form>
+        </td>
+        <td><span class="pill pill-{{ 'approved' if u.is_active else 'rejected' }}">{{ 'Active' if u.is_active else 'Inactive' }}</span></td>
+        <td>
+          {% if u.id != current_user.id %}
+          <form method="post" action="{{ url_for('admin_toggle_status', user_id=u.id) }}" class="inline">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="btn btn-small {{ 'btn-danger' if u.is_active else 'btn-primary' }}" type="submit">
+              {{ 'Deactivate' if u.is_active else 'Activate' }}
+            </button>
+          </form>
+          {% else %}<span class="muted">(you)</span>{% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

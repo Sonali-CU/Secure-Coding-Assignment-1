@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Audit log{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div>
+    <h1>Audit log</h1>
+    <p class="muted">Logins, denied access attempts, profile changes and role or permission changes. Used for periodic access reviews.</p>
+  </div>
+</section>
+
+<section class="card">
+  <table class="table compact">
+    <thead><tr><th>#</th><th>When (UTC)</th><th>Actor</th><th>Action</th><th>Target</th><th>Detail</th></tr></thead>
+    <tbody>
+      {% for log, username in rows %}
+      <tr>
+        <td>{{ log.id }}</td>
+        <td>{{ log.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+        <td>{{ username or 'anonymous' }}</td>
+        <td><code>{{ log.action }}</code></td>
+        <td>{{ log.target }}</td>
+        <td>{{ log.detail }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

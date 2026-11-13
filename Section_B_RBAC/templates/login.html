@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Log in{% endblock %}
+{% block content %}
+<div class="auth-wrap">
+  <section class="card auth-card">
+    <h1>Welcome back</h1>
+    <p class="muted">Sign in to your SecureBank account.</p>
+    <form method="post" action="{{ url_for('login') }}" autocomplete="off">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <label>Username
+        <input name="username" value="{{ username }}" maxlength="32" required autofocus>
+      </label>
+      <label>Password
+        <input type="password" name="password" maxlength="128" required>
+      </label>
+      <button class="btn btn-primary btn-block" type="submit">Log in</button>
+    </form>
+
+    {% if show_demo %}
+    <details class="demo">
+      <summary>Development demo accounts (remove for any real use)</summary>
+      <table class="table compact">
+        <thead><tr><th>Role</th><th>Username</th><th>Password</th></tr></thead>
+        <tbody>
+          <tr><td>Customer</td><td><code>customer</code></td><td><code>Customer#2026</code></td></tr>
+          <tr><td>Customer 2</td><td><code>customer2</code></td><td><code>Customer2#2026</code></td></tr>
+          <tr><td>Manager</td><td><code>manager</code></td><td><code>Manager#2026</code></td></tr>
+          <tr><td>Administrator</td><td><code>admin</code></td><td><code>Admin#2026</code></td></tr>
+        </tbody>
+      </table>
+    </details>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

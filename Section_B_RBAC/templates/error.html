@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}{{ code }}{% endblock %}
+{% block content %}
+<section class="card error-card">
+  <div class="error-code">{{ code }}</div>
+  <h1>{{ message }}</h1>
+  <p class="muted">
+    {% if code == 401 %}Log in with an account that has access to this page.
+    {% elif code == 403 %}Your role does not allow this action. Contact an administrator if you believe this is wrong.
+    {% elif code == 404 %}If you were looking for a record, it may not exist or may not belong to your account.
+    {% endif %}
+  </p>
+  <div class="actions">
+    {% if current_user %}
+      <a class="btn btn-primary" href="{{ url_for('dashboard') }}">Go to my dashboard</a>
+    {% else %}
+      <a class="btn btn-primary" href="{{ url_for('login') }}">Log in</a>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}
