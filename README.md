@@ -9,6 +9,8 @@ Theory answers are in `Documentation/`. Screenshots are in `Screenshots/`. Test 
 
 Neither project needs paid APIs, cloud services or a separate database server. Everything runs locally.
 
+**GitHub Repository**: [https://github.com/Sonali-CU/Secure-Coding-Assignment-1](https://github.com/Sonali-CU/Secure-Coding-Assignment-1)
+
 ---
 
 ## 1. Requirements
@@ -18,7 +20,7 @@ Neither project needs paid APIs, cloud services or a separate database server. E
 - Internet access only for the one-time `pip install` step.
 - A modern browser (Edge, Chrome or Firefox) to use the web application.
 
-Built and tested with Python 3.13 on Linux. The Windows commands below have not yet been run on Windows; see `Documentation/Test_Results.md`, section "Not verified".
+Fully verified and passing natively on Windows 11 with Python 3.13.7. See `Documentation/Test_Results.md` for full results.
 
 ---
 

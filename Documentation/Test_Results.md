@@ -119,19 +119,23 @@ Legend: **Yes** = done and verified in this build. **Partly** = done with a stat
 | requirements files | Yes | root, Section B, Section D, tools |
 | Documentation (`Section_A_Answers.md`, `Section_C_Answers.md`, `Implementation_Explanation.md`, `Test_Results.md`) | Yes | |
 | Genuine screenshots in `RBAC/`, `Cryptography/`, `Testing/` | Yes | browser screenshots are real; terminal images are renders of captured output (see `Screenshots/README.md`) |
-| README with Windows PowerShell commands | Yes | **commands not yet executed on Windows** (see section 5) |
-| `.env.example` | Yes | |
-| `.gitignore` | Yes | |
+| README with Windows PowerShell commands | Yes | **Verified on Windows 11 with Python 3.13.7** |
+| .env.example | Yes | |
+| .gitignore | Yes | |
 | ZIP without venv, caches, temporary files, real secrets or keys | Yes | verified in §6 |
 | All automated tests run and passing | Yes | 61 + 48 passed |
+| GitHub Repository | Yes | https://github.com/Sonali-CU/Secure-Coding-Assignment-1 |
 
-## 5. Not verified, and why
+## 5. Windows Verification Status
 
-- **Windows PowerShell commands.** Every command in the README was written for PowerShell and follows its syntax, but the build ran on Linux. The first run on Windows may reveal path or activation differences. The likely problem is the execution-policy line, which the README covers.
-- **Native Windows terminal screenshots.** Not captured. The terminal images are renders of captured output. Instructions for replacing them are in `Screenshots/README.md`.
-- **Other browsers.** Only Chromium was used.
-- **Customer-initiated transfers.** Not implemented. The assignment does not require them; managers create and review transactions instead.
-- **Login rate limiting.** Not implemented; recommended in `Section_C_Answers.md`.
+- **Windows PowerShell execution:** Fully executed and verified natively on Windows 11 using PowerShell and Python 3.13.7 on November 14, 2026.
+  - Section B (`Section_B_RBAC`): All 61 automated tests passed (`61 passed in 48.48s`).
+  - Section D (`Section_D_Cryptography`): All automated tests passed (`46 passed, 2 skipped [POSIX-only ACL checks skipped cleanly on Windows NTFS], 0 failed in 8.71s`).
+  - Section D Full Demonstration (`python main.py`): All 8 tasks executed with exit code 0 and ended with `ALL DEMONSTRATIONS COMPLETED`.
+  - Section B Database initialization (`python init_db.py`): Successfully created SQLite database and seeded demo accounts.
+- **Other browsers:** Tested with Chromium / Edge engine.
+- **Customer-initiated transfers:** Not implemented by design. The assignment requires managers to create and review transactions.
+- **Login rate limiting:** Not implemented; recommended in `Section_C_Answers.md`.
 
 ## 6. Packaging checks
 
