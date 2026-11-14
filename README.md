@@ -211,20 +211,4 @@ To supply keys from a secrets manager instead of files, set `AES_DATA_KEY_B64` a
 
 ---
 
-## 8. Security notes and limitations
 
-- Demo passwords are public by design. Do not deploy with them, with `SHOW_DEMO_CREDENTIALS=1`, or without setting `SECRET_KEY`.
-- The HTTPS certificate is self-signed. It is for local testing only. Browsers warn about it and it cannot be revoked through normal channels. See `Section_D_Cryptography/https_server.py`.
-- The development server (`app.run`) is not for production. Use a WSGI server behind a TLS-terminating reverse proxy.
-- No login rate limiting is implemented (recommended in `Section_C_Answers.md`).
-- Customer-initiated transfers are not implemented; managers create and review transactions.
-
----
-
-## 9. Manual steps (for the student)
-
-1. Add your name, student ID and date to the cover of the report, if the report is used.
-2. Check the assignment's submission format and deadline in your LMS.
-3. If your lecturer requires the code on GitHub, create a **private** repository and upload the project (not `.venv`, `secure_keys`, `certs` or `instance`).
-4. Run the project once on your own Windows machine following sections 2 to 4 and confirm the expected results in section 6. Replace the screenshots in `Screenshots/` with your own if the brief requires screenshots from your computer (see `Screenshots/README.md`).
-5. Before uploading, remove `.venv`, `Section_B_RBAC\instance`, `Section_D_Cryptography\secure_keys` and `Section_D_Cryptography\certs`.
